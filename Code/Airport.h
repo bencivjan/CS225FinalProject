@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 class Airport{
     private:
@@ -19,4 +20,6 @@ class Airport{
 
     std::string get_OpenFlightID();
     std::string get_abbreviation();
+
+    bool operator==(const Airport& other);
 };

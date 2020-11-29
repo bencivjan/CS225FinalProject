@@ -1,3 +1,4 @@
+
 #include "Airport.h"
 
 Airport::Airport(std::string ID, std::string name, std::string city, std::string country, double latitude, double longitude, std::string code){
@@ -24,4 +25,11 @@ std::string Airport::get_name(){
 
 std::string Airport::get_abbreviation(){
     return abbreviation;
+}
+
+bool Airport::operator==(const Airport& other){
+    if(OpenFlightID == other.OpenFlightID){
+        return true;
+    }
+    return false;
 }
