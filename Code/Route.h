@@ -4,12 +4,11 @@
 class Route{
     // Need to figure out weight
     private:
-    Airport source_;
-    Airport destination_;
+    const Airport& source_;
+    const Airport& destination_;
     std::string airline_ICAO;
     int stops_;
 
     public:
-    Route();
-    Route(Airport source, Airport destination, std::string airline_code, int stops);
+    Route(const Airport& source, const Airport& destination, std::string airline_code, int stops);
 };

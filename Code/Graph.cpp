@@ -1,4 +1,3 @@
-
 #include "Graph.h"
 
 Graph::Graph(std::vector<Airport> airports, std::vector<Route> routes){
@@ -19,9 +18,8 @@ Graph::Graph(std::vector<Airport> airports, std::vector<Route> routes){
     std::string headers[14] = {"openflightID", "name", "city", "country", "abbreviation", "ICAO", "latitude", "longitutde", "altitude", "timezone", "DST", "timezone-database", "type", "source"};
     if(airport_data.is_open() && route_data.is_open()){
         std::string curr_airport;
-        std::string spliced[14];
         while(!airport_data.eof()){
-            int i = 9;
+            int i = 0;
             int start_index = 0;
             int reads = 0;
             int delim_index = 0;
@@ -46,10 +44,21 @@ Graph::Graph(std::vector<Airport> airports, std::vector<Route> routes){
 
             // Add to graph
             std::vector<Route> adjacent_routes = {};
-            airports_[new_airport] = adjacent_routes;
+            std::pair<Airport, std::vector<Route>> new_pair(new_airport, adjacent_routes);
+            airports_.insert(new_pair);
         }
+        airport_data.close();
         // Route data
+        std::string curr_route;
         while(!route_data.eof()){
+            int reads = 0;
+            int i = 0;
+            int start_index = 0;
+            int delim_index = 0;
+            std::getline(route_data, curr_route);
+            while(reads < 2){
+                delim_index = curr_route.find(",", start_index);
+            }
 
         }
     }

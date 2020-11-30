@@ -12,14 +12,16 @@ class Airport{
 
     public:
     // Constructor
+    Airport();
+    Airport(const Airport& other);
     Airport(std::string ID, std::string name, std::string city, std::string country, double latitude, double longitude, std::string code);
 
-    std::pair<double, double> get_coords();
-    std::pair<std::string, std::string> get_location();
-    std::string get_name();
+    std::pair<double, double> get_coords() const;
+    std::pair<std::string, std::string> get_location() const;
+    std::string get_name() const;
 
-    std::string get_OpenFlightID();
-    std::string get_abbreviation();
+    std::string get_OpenFlightID() const;
+    std::string get_abbreviation() const;
 
-    bool operator==(const Airport& other);
+    bool operator==(const Airport& other) const;
 };
