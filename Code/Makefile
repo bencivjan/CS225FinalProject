@@ -1,17 +1,17 @@
 map : main.o Graph.o Airport.o Route.o hash.o
-	clang++ main.o Graph.o Airport.o Route.o hash.o -o map
+	g++ -g main.o Graph.o Airport.o Route.o hash.o -o map -ggdb
 
 main.o : main.cpp
-	clang++ -c main.cpp
+	g++ -c main.cpp
 
 Graph.o : Graph.h Graph.cpp
-	clang++ -c Graph.cpp
+	g++ -std=gnu++11 -c Graph.cpp
 
 Airport.o : Airport.h Airport.cpp
-	clang++ -c Airport.cpp
+	g++ -c Airport.cpp
 
 Route.o : Route.h Route.cpp
-	clang++ -c Route.cpp
+	g++ -c Route.cpp
 	
 hash.o : hash.cpp
-	clang++ -c hash.cpp
+	g++ -c hash.cpp

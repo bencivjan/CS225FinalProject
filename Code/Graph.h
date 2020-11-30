@@ -20,7 +20,7 @@ class Graph{
     std::vector<Route> routes_;
 
     public:
-    Graph(std::vector<Airport> airports, std::vector<Route> routes);
+    Graph();
 
     bool direct_route_exists(Airport source, Airport destination);
     std::vector<Airport> BFS(Airport start);
@@ -29,4 +29,7 @@ class Graph{
     // Random idea, spanning tree of all airports in contact with a certain source, could be useful for force graph
     std::vector<Airport> find_connected(Airport start);
     
+
+    // TESTING
+    std::unordered_map<Airport, std::vector<Route>>& data();
 };

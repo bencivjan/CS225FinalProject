@@ -1,6 +1,6 @@
 #include "Graph.h"
 
-Graph::Graph(std::vector<Airport> airports, std::vector<Route> routes){
+Graph::Graph(){
     // Files
     airports_ = std::unordered_map<Airport, std::vector<Route>>();
      
@@ -8,13 +8,22 @@ Graph::Graph(std::vector<Airport> airports, std::vector<Route> routes){
     std::ifstream route_data("Data/route_data.txt");
     // Create and fill all nodes
     std::unordered_map<std::string, std::string> var_names;
-    var_names["name"] = "";
-    var_names["latitude"] = "";
-    var_names["longitdue"] = "";
-    var_names["city"] = "";
-    var_names["country"] = "";
-    var_names["openflightID"] = "";
-    var_names["abbreviation"] = "";
+
+    std::pair<std::string, std::string> name_pair("name", "");
+    std::pair<std::string, std::string> lat_pair("latitude", "");
+    std::pair<std::string, std::string> long_pair("longitutde", "");
+    std::pair<std::string, std::string> city_pair("city", "");
+    std::pair<std::string, std::string> country_pair("country", "");
+    std::pair<std::string, std::string> ID_pair("openflightID", "");
+    std::pair<std::string, std::string> abbrev_pair("abbreviation", "");
+    var_names.insert(name_pair);
+    var_names.insert(lat_pair);    
+    var_names.insert(long_pair);
+    var_names.insert(city_pair);
+    var_names.insert(country_pair);
+    var_names.insert(ID_pair);
+    var_names.insert(abbrev_pair);
+
     std::string headers[14] = {"openflightID", "name", "city", "country", "abbreviation", "ICAO", "latitude", "longitutde", "altitude", "timezone", "DST", "timezone-database", "type", "source"};
     if(airport_data.is_open() && route_data.is_open()){
         std::string curr_airport;
@@ -38,6 +47,7 @@ Graph::Graph(std::vector<Airport> airports, std::vector<Route> routes){
                 i++;
             }
             // construct Airport
+            std::cout << "latitude = " << var_names["latitude"] << "\n";
             Airport new_airport(var_names["openflightID"], var_names["name"], var_names["city"], var_names["country"],
                             std::stod(var_names["latitidue"],NULL), std::stod(var_names["longitude"], NULL),
                             var_names["abbreviation"]);
@@ -62,4 +72,9 @@ Graph::Graph(std::vector<Airport> airports, std::vector<Route> routes){
 
         }
     }
+
+}
+
+std::unordered_map<Airport, std::vector<Route>>& Graph::data(){
+    return airports_;
 }
