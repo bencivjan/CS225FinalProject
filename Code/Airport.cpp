@@ -44,9 +44,13 @@ std::string Airport::get_abbreviation() const{
     return abbreviation;
 }
 
+std::string Airport::get_OpenFlightID() const{
+    return OpenFlightID;
+}
 bool Airport::operator==(const Airport& other) const{
     if(OpenFlightID == other.OpenFlightID){
         return true;
     }
     return false;
 }
+
