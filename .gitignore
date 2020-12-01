@@ -1,0 +1,3 @@
+# Ignore files cleaned up by `make clean`
+*.o
+map
