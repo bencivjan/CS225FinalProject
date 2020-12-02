@@ -136,8 +136,8 @@ Graph::Graph(){
             Route new_route(curr_source, curr_dest, var_names["airline_code"], num_stops);
             routes_.push_back(new_route);
         }
+        route_data.close();
     }
-
 }
 
 const Airport& Graph::get_airport_by_ID(std::string ID){
