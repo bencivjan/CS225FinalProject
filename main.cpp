@@ -9,10 +9,14 @@ int main(){
     //std::cout << "Left constructor\n";
     std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>::iterator it;
     std::cout << "Pointer: " << &it;
-    /*for(it = airports.begin(); it != airports.end(); it++){
+
+    // NOdes
+    for(it = airports.begin(); it != airports.end(); it++){
         std::cout << "Name: " << it->second.first.get_name() << " Abbreviation: " << it->second.first.get_abbreviation() << " Coords: " << it->second.first.get_coords().first << ", " << it->second.first.get_coords().second
                     << " ID = " << it->second.first.get_OpenFlightID() << "\n";
-    }*/
+    }
+
+    // Routes
     int length = routes.size();
     int i = 0;
     for(i = 0; i < length; i++){
