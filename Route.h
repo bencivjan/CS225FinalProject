@@ -16,4 +16,5 @@ class Route{
     const Airport& get_source();
     const Airport& get_destination();
     std::string get_code();
+    int get_stops();
 };

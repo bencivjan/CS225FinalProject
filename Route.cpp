@@ -17,3 +17,7 @@ const Airport& Route::get_destination(){
 std::string Route::get_code(){
     return this->airline_code;
 }
+
+int Route::get_stops(){
+    return stops_;
+}

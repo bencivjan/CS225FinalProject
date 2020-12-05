@@ -12,7 +12,8 @@ int main() {
                        std::pair<Airport, std::vector<Route>>>::iterator it;
     std::cout << "Pointer: " << &it;
 
-    // NOdes
+    // Nodes
+    /*
     for (it = airports.begin(); it != airports.end(); it++) {
         std::cout << "Name: " << it->second.first.get_name()
                   << " Abbreviation: " << it->second.first.get_abbreviation()
@@ -20,6 +21,7 @@ int main() {
                   << it->second.first.get_coords().second
                   << " ID = " << it->second.first.get_OpenFlightID() << "\n";
     }
+    */
 
     // Routes
     int length = routes.size();
@@ -27,7 +29,8 @@ int main() {
     for (i = 0; i < length; i++) {
         std::cout << "Source name = " << routes[i].get_source().get_name()
                   << " Destination = " << routes[i].get_destination().get_name()
-                  << " Code = " << routes[i].get_code() << "\n";
+                  << " Code = " << routes[i].get_code()
+                  << " Stops = " << routes[i].get_stops() << "\n";
     }
     return 0;
 }

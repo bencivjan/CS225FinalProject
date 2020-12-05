@@ -139,13 +139,13 @@ Graph::Graph() {
                 i++;
                 start_index = delim_index + 1;
             }
-            const Airport& curr_source =
-                get_airport_by_ID(var_names["source_ID"]);
-            const Airport& curr_dest =
-                get_airport_by_ID(var_names["destination_ID"]);
+            if(var_names["stops"] != "0"){
+                continue;
+            }
+            const Airport& curr_source = get_airport_by_ID(var_names["source_ID"]);
+            const Airport& curr_dest = get_airport_by_ID(var_names["destination_ID"]);
             int num_stops = std::stoi(var_names["stops"], NULL);
-            Route new_route(curr_source, curr_dest, var_names["airline_code"],
-                            num_stops);
+            Route new_route(curr_source, curr_dest, var_names["airline_code"], num_stops);
             routes_.push_back(new_route);
         }
         route_data.close();
