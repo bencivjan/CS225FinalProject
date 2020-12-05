@@ -8,6 +8,8 @@
 #include "Airport.h"
 #include "Route.h"
 
+using std::vector;
+
 class Graph {
    private:
     // Probably need to change these
@@ -24,6 +26,7 @@ class Graph {
     Graph();
 
     const Airport& get_airport_by_ID(std::string ID);
+    const vector<Route>& get_adjacent_routues_by_ID(std::string ID);
 
     // TESTING
     std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>&
