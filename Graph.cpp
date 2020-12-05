@@ -5,8 +5,8 @@ Graph::Graph() {
     airports_ = std::unordered_map<std::string,
                                    std::pair<Airport, std::vector<Route>>>();
 
-    std::ifstream airport_data("Data/airport_data.txt");
-    std::ifstream route_data("Data/route_data.txt");
+    std::ifstream airport_data("Data/airport_data.csv");
+    std::ifstream route_data("Data/route_data.csv");
     // Create and fill all nodes
     std::unordered_map<std::string, std::string> var_names;
 
@@ -139,13 +139,16 @@ Graph::Graph() {
                 i++;
                 start_index = delim_index + 1;
             }
-            if(var_names["stops"] != "0"){
+            if (var_names["stops"] != "0") {
                 continue;
             }
-            const Airport& curr_source = get_airport_by_ID(var_names["source_ID"]);
-            const Airport& curr_dest = get_airport_by_ID(var_names["destination_ID"]);
+            const Airport& curr_source =
+                get_airport_by_ID(var_names["source_ID"]);
+            const Airport& curr_dest =
+                get_airport_by_ID(var_names["destination_ID"]);
             int num_stops = std::stoi(var_names["stops"], NULL);
-            Route new_route(curr_source, curr_dest, var_names["airline_code"], num_stops);
+            Route new_route(curr_source, curr_dest, var_names["airline_code"],
+                            num_stops);
             routes_.push_back(new_route);
         }
         route_data.close();
