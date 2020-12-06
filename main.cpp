@@ -8,14 +8,14 @@ int main() {
         airports = FlightMap.get_airports();
     std::vector<Route> routes = FlightMap.get_routes();
 
-    std::cout << FlightMap.get_adjacent_routues_by_ID("2990").size()
+    std::cout << FlightMap.get_adjacent_routes_by_ID("2990").size()
               << std::endl;
     // std::cout << "Left constructor\n";
     // std::unordered_map<std::string,
     //                    std::pair<Airport, std::vector<Route>>>::iterator it;
     // std::cout << "Pointer: " << &it;
 
-    std::cout << FlightMap.get_adjacent_routues_by_ID("20").size() << std::endl;
+    std::cout << FlightMap.get_adjacent_routes_by_ID("20").size() << std::endl;
 
     // Routes
     // int length = routes.size();

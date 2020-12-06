@@ -1,12 +1,16 @@
 #pragma once
 
 #include <queue>
+#include <unordered_map>
 
+#include "../Graph.h"
 #include "../cs225/PNG.h"
+
+using std::queue;
 
 class BFS {
    public:
-    BFS(const PNG& png, const Point& start, double t);
+    void traversal(Graph g, Airport start);
 
    private:
 };
