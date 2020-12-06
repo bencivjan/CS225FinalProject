@@ -1,7 +1,6 @@
 {
     "files.associations": {
         "string": "cpp",
-        "queue": "cpp",
-        "unordered_map": "cpp"
+        "iosfwd": "cpp"
     }
 }
