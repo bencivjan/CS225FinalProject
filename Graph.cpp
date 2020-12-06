@@ -162,6 +162,8 @@ void Graph::parse_routes_data() {
             Route new_route(curr_source, curr_dest, var_names["airline_code"],
                             num_stops);
             routes_.push_back(new_route);
+            airports_[curr_source.get_OpenFlightID()].second.push_back(
+                new_route);
         }
         route_data.close();
     }
