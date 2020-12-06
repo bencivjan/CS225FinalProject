@@ -24,6 +24,8 @@ class Graph {
     Graph();
 
     const Airport& get_airport_by_ID(std::string ID);
+    void parse_airport_data();
+    void parse_routes_data();
 
     // TESTING
     std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>&

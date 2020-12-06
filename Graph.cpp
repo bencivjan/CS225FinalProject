@@ -1,13 +1,16 @@
 #include "Graph.h"
 
 Graph::Graph() {
-    // Files
+    parse_airport_data();
+    parse_routes_data();
+}
+
+void Graph::parse_airport_data() {
     airports_ = std::unordered_map<std::string,
                                    std::pair<Airport, std::vector<Route>>>();
 
     std::ifstream airport_data("Data/airport_data.csv");
-    std::ifstream route_data("Data/route_data.csv");
-    // Create and fill all nodes
+
     std::unordered_map<std::string, std::string> var_names;
 
     std::pair<std::string, std::string> name_pair("name", "");
@@ -30,11 +33,8 @@ Graph::Graph() {
         "abbreviation", "ICAO",     "latitude", "longitude",
         "altitude",     "timezone", "DST",      "timezone-database",
         "type",         "source"};
-    std::string route_headers[9] = {
-        "airline_code",     "airline_ID",     "source_code", "source_ID",
-        "destination_code", "destination_ID", "codeshare",   "stops",
-        "equipment"};
-    if (airport_data.is_open() && route_data.is_open()) {
+
+    if (airport_data.is_open()) {
         std::string curr_airport;
         while (!airport_data.eof()) {
             int i = 0;
@@ -99,7 +99,19 @@ Graph::Graph() {
             airports_.insert(completed);
         }
         airport_data.close();
-        var_names.clear();
+    }
+}
+
+void Graph::parse_routes_data() {
+    std::string route_headers[9] = {
+        "airline_code",     "airline_ID",     "source_code", "source_ID",
+        "destination_code", "destination_ID", "codeshare",   "stops",
+        "equipment"};
+    std::ifstream route_data("Data/route_data.csv");
+
+    std::unordered_map<std::string, std::string> var_names;
+
+    if (route_data.is_open()) {
         // Route data
         std::pair<std::string, std::string> source_pair("source_ID", "");
         std::pair<std::string, std::string> dest_pair("destination_ID", "");
