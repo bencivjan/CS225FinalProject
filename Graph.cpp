@@ -173,6 +173,10 @@ const Airport& Graph::get_airport_by_ID(std::string ID) {
     return airports_[ID].first;
 }
 
+const std::vector<Route>& Graph::get_adjacent_routues_by_ID(std::string ID) {
+    return airports_[ID].second;
+}
+
 std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>&
 Graph::get_airports() {
     return airports_;
