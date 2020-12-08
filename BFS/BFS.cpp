@@ -8,11 +8,11 @@ void BFS::traversal(Graph g, Airport start) {
     q.push(start);
 
     while (!q.empty()) {
+        count++;
         Airport& curr = q.front();
         q.pop();
         vector<Route> routes =
             g.get_adjacent_routes_by_ID(curr.get_OpenFlightID());
-
         for (auto& route : routes) {
             Airport adjacent = route.get_destination();
             if (visited.find(adjacent.get_OpenFlightID()) == visited.end()) {

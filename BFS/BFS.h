@@ -12,5 +12,5 @@ class BFS {
    public:
     void traversal(Graph g, Airport start);
 
-   private:
+    int count;
 };
