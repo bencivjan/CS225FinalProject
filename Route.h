@@ -8,6 +8,7 @@ class Route{
     const Airport& destination_;
     std::string airline_code;
     int stops_;
+    int weight_;
 
     public:
     Route(const Airport& source, const Airport& destination, std::string airline_code, int stops);
@@ -17,4 +18,5 @@ class Route{
     const Airport& get_destination();
     std::string get_code();
     int get_stops();
+    int get_dist(Airport source, Airport dest);
 };
