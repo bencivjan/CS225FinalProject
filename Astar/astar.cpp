@@ -1,65 +1,111 @@
 #include "astar.h"
 
-void Astar::runAstar(Graph g, Airport start, Airport end) {
-    vector<Airport> open;
-    vector<Airport> closed;
+vector<Airport&> Astar::astarPath(Graph& graph, const Airport& start,
+                                  const Airport& end) {
+    open.clear();
+    closed.clear();
+    h.clear();
+    g.clear();
+    f.clear();
+    parent.clear();
+    vector<Airport&> path;
+    Airport& final = runAstar(graph, start, end);
+    Airport* current = &final;
+    string current_ID = current->get_OpenFlightID();
+
+    while (parent.find(current_ID) != parent.end()) {
+        path.insert(path.begin(), *current);
+        current = parent[current_ID];
+        current_ID = current->get_OpenFlightID();
+    }
+    return path;
+}
+
+Airport& Astar::runAstar(Graph& graph, const Airport& start,
+                         const Airport& end) {
     Airport current;
-    // Map to store h heuristics
-    std::unordered_map<std::string, int> h;
-    // Map to store g heuristics
-    std::unordered_map<std::string, int> g;
 
-    h[start.get_OpenFlightID()] = 0;
+    h[start.get_OpenFlightID()] = graph.get_dist(start, start);
+    g[start.get_OpenFlightID()] = graph.get_dist(start, end);
 
-    // start.g = distance(start, start);
-    // start.h = distance(start, end);
+    open.push_back(start);
 
-    // open.push(start);
+    while (open.size() > 0) {
+        // current is node with smallest f cost in open list
+        int index = min_fcost(open);
+        current = open[index];
+        string current_ID = current.get_OpenFlightID();
+        // Remove current from the open list
+        open.erase(open.begin() + index);
+        // Push current onto the closed list
+        closed.push_back(current);
 
-    // while (open.length > 0) {
-    //     // current is node with smallest f cost in open list
-    //     // eslint-disable-next-line no-undef
-    //     current = _.min(open, node = > node.f);
-    //     // Remove current from the open list
-    //     open.splice(open.indexOf(current), 1);
-    //     // Push current onto the closed list
-    //     closed.push(current);
+        // If the current node is the end node, we are done
+        if (current_ID == end.get_OpenFlightID()) {
+            return current;
+        }
 
-    //     // If the current node is the end node, we are done
-    //     if (current.xCoord == = end.xCoord&& current.yCoord == = end.yCoord)
-    //     {
-    //         return current;
-    //     }
-    //     let neighbors = getNeighbors(current, grid);
-    //     for (let neighbor of neighbors) {
-    //         // If neighbor is not walkable or in the closed list, skip to
-    //         // next neighbor
-    //         if (neighbor.isWall || closed.indexOf(neighbor) >= 0) {
-    //             continue;
-    //         }
-    //         // If path to neighbor (g cost) is shorter than current
-    //         if (current.g + distance(current, neighbor) < neighbor.g) {
-    //             // Set f cost (through g and h)
-    //             neighbor.g = current.g + distance(current, neighbor);
-    //             neighbor.h = distance(neighbor, end);
-    //             // Set parent of neighbor to current
-    //             neighbor.parent = current;
-    //         }
-    //         // If neighbor is not in open list, add it to open list
-    //         if (open.indexOf(neighbor) < 0) {
-    //             open.push(neighbor);
-    //         }
-    //     }
-    //     // eslint-disable-next-line no-undef
-    //     if (showAlg) {
-    //         for (let node of open) {
-    //             node.isOpen = true;
-    //         }
-    //         for (let node of closed) {
-    //             node.isClosed = true;
-    //         }
-    //         await sleep(50);
-    //     }
-    // }
-    // throw "PathNotFound";
+        // Iterate through neighbors
+        vector<Route> neighbors = graph.get_adjacent_routes_by_ID(current_ID);
+
+        for (auto& route : neighbors) {
+            Airport neighbor = route.get_destination();
+            string neighbor_ID = neighbor.get_OpenFlightID();
+            // If neighbor is not walkable or in the closed list, skip to
+            // next neighbor
+            if (exists(closed, neighbor)) continue;
+
+            // If path to neighbor (g cost) is shorter than current
+            if (g[current_ID] + graph.get_dist(current, neighbor) <
+                g[neighbor_ID]) {
+                // Set f cost (through g and h)
+                g[neighbor_ID] =
+                    g[current_ID] + graph.get_dist(current, neighbor);
+                h[neighbor_ID] = graph.get_dist(neighbor, end);
+                // Set parent of neighbor to current
+                parent[neighbor_ID] = &current;
+            }
+            // If neighbor is not in open list, add it to open list
+            if (exists(open, neighbor)) {
+                open.push_back(neighbor);
+            }
+        }
+    }
+}
+
+int Astar::fcost(const Airport& a) {
+    string name = a.get_OpenFlightID();
+
+    if (f.find(name) != f.end()) {
+        return f[name];
+    } else if (h.find(name) == h.end()) {
+        f[name] = INT_MAX;
+        return INT_MAX;
+    } else if (g.find(name) == g.end()) {
+        g[name] = INT_MAX;
+        return INT_MAX;
+    } else {
+        f[name] = g[name] + h[name];
+        return f[name];
+    }
+}
+
+int Astar::min_fcost(const vector<Airport>& v) {
+    if (v.size() == 0) return 0;
+    int min = fcost(v[0]);
+    for (auto& a : v) {
+        if (fcost(a) < min) {
+            min = fcost(a);
+        }
+    }
+    return min;
+}
+
+bool Astar::exists(const vector<Airport>& v, const Airport& check) {
+    for (auto& airport : v) {
+        if (airport == check) {
+            return true;
+        }
+    }
+    return false;
 }
