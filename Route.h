@@ -19,4 +19,6 @@ class Route{
     std::string get_code();
     int get_stops();
     int get_dist(Airport source, Airport dest);
+    int get_weight();
+    
 };
