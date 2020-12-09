@@ -13,4 +13,7 @@ class BFS {
     void traversal(Graph g, Airport start);
 
     int count;
+    Airport start_airport;
+    Airport end_airport;
+    std::vector<std::string> visited_airport_ids;
 };

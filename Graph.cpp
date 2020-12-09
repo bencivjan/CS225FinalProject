@@ -1,7 +1,7 @@
 #include "Graph.h"
 
-Graph::Graph(string airport_file, string route_file) {
-    parse_airport_data(airport_file);
+Graph::Graph(string airport_file, string route_file, string start_airport_ID) {
+    parse_airport_data(airport_file, start_airport_ID);
     parse_routes_data(route_file);
 }
 
@@ -11,12 +11,13 @@ Graph::Graph(std::vector<string> input) {
     }
 }
 
-void Graph::parse_airport_data(string airport_file) {
+void Graph::parse_airport_data(string airport_file, string start_airport_ID) {
     airports_ = std::unordered_map<std::string,
                                    std::pair<Airport, std::vector<Route>>>();
-    int count = 0;
 
     std::ifstream airport_data(airport_file);
+
+    start_airport = Airport();
 
     std::unordered_map<std::string, std::string> var_names;
 
@@ -104,7 +105,7 @@ void Graph::parse_airport_data(string airport_file) {
                 completed(new_airport.get_OpenFlightID(), new_pair);
             airports_.insert(completed);
 
-            if (count == 0) {  // Set SFO airport as start
+            if (new_airport.get_OpenFlightID() == start_airport_ID) {
                 start_airport = new_airport;
             }
         }

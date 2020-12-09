@@ -1,18 +1,18 @@
 #include "Airport.h"
 
 Airport::Airport() {
-    OpenFlightID = "";
+    OpenFlightID = "-1";
     name_ = "";
-    location = std::pair<std::string, std::string>();
-    coordinates = std::pair<double, double>();
+    location = std::make_pair("", "");
+    coordinates = std::make_pair(0, 0);
     abbreviation = "";
 }
 
 Airport::Airport(std::string name) {
     OpenFlightID = name;
     name_ = "";
-    location = std::pair<std::string, std::string>();
-    coordinates = std::pair<double, double>();
+    location = std::make_pair("", "");
+    coordinates = std::make_pair(0, 0);
     abbreviation = "";
 }
 
