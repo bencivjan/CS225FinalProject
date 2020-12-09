@@ -34,6 +34,8 @@ class Graph {
     void parse_airport_data(string airport_file);
     void parse_routes_data(string route_file);
 
+    int get_dist(Airport source, Airport destination);
+
     // TESTING
     std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>&
     get_airports();
