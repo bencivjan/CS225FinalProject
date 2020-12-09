@@ -17,6 +17,8 @@ void Graph::parse_airport_data(string airport_file, string start_airport_ID) {
 
     std::ifstream airport_data(airport_file);
 
+    start_airport = Airport();
+
     std::unordered_map<std::string, std::string> var_names;
 
     std::pair<std::string, std::string> name_pair("name", "");
