@@ -1,15 +1,22 @@
 #include "Graph.h"
 
-Graph::Graph() {
-    parse_airport_data();
-    parse_routes_data();
+Graph::Graph(string airport_file, string route_file) {
+    parse_airport_data(airport_file);
+    parse_routes_data(route_file);
 }
 
-void Graph::parse_airport_data() {
+Graph::Graph(std::vector<string> input) {
+    for (auto& node : input) {
+        Airport vertex(node);
+    }
+}
+
+void Graph::parse_airport_data(string airport_file) {
     airports_ = std::unordered_map<std::string,
                                    std::pair<Airport, std::vector<Route>>>();
+    int count = 0;
 
-    std::ifstream airport_data("Data/airport_data.csv");
+    std::ifstream airport_data(airport_file);
 
     std::unordered_map<std::string, std::string> var_names;
 
@@ -85,7 +92,6 @@ void Graph::parse_airport_data() {
             } else {
                 long_val = std::stod(var_names["longitude"], NULL);
             }
-
             Airport new_airport(var_names["openflightID"], var_names["name"],
                                 var_names["city"], var_names["country"],
                                 lat_val, long_val, var_names["abbreviation"]);
@@ -97,17 +103,21 @@ void Graph::parse_airport_data() {
             std::pair<std::string, std::pair<Airport, std::vector<Route>>>
                 completed(new_airport.get_OpenFlightID(), new_pair);
             airports_.insert(completed);
+
+            if (count == 0) {  // Set SFO airport as start
+                start_airport = new_airport;
+            }
         }
         airport_data.close();
     }
 }
 
-void Graph::parse_routes_data() {
+void Graph::parse_routes_data(string route_file) {
     std::string route_headers[9] = {
         "airline_code",     "airline_ID",     "source_code", "source_ID",
         "destination_code", "destination_ID", "codeshare",   "stops",
         "equipment"};
-    std::ifstream route_data("Data/route_data.csv");
+    std::ifstream route_data(route_file);
 
     std::unordered_map<std::string, std::string> var_names;
 
@@ -173,7 +183,7 @@ const Airport& Graph::get_airport_by_ID(std::string ID) {
     return airports_[ID].first;
 }
 
-const std::vector<Route>& Graph::get_adjacent_routues_by_ID(std::string ID) {
+const std::vector<Route>& Graph::get_adjacent_routes_by_ID(std::string ID) {
     return airports_[ID].second;
 }
 
