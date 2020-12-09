@@ -24,14 +24,14 @@ class Graph {
     std::vector<Route> routes_;
 
    public:
-    Graph(string airport_file, string route_file);
+    Graph(string airport_file, string route_file, string start_airport_ID);
 
     // For testing purposes
     Graph(std::vector<string> input);
 
     const Airport& get_airport_by_ID(std::string ID);
     const std::vector<Route>& get_adjacent_routes_by_ID(std::string ID);
-    void parse_airport_data(string airport_file);
+    void parse_airport_data(string airport_file, string start_airport_ID);
     void parse_routes_data(string route_file);
 
     // TESTING
