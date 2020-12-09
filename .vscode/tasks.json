@@ -6,7 +6,7 @@
         {
             "label": "make",
             "type": "shell",
-            "command": "make map"
+            "command": "make test"
         }
         // {
         //     "label": "echotest",

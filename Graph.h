@@ -8,6 +8,9 @@
 #include "Airport.h"
 #include "Route.h"
 
+using std::string;
+using std::vector;
+
 class Graph {
    private:
     // Probably need to change these
@@ -21,12 +24,21 @@ class Graph {
     std::vector<Route> routes_;
 
    public:
-    Graph();
+    Graph(string airport_file, string route_file);
+
+    // For testing purposes
+    Graph(std::vector<string> input);
 
     const Airport& get_airport_by_ID(std::string ID);
+    const std::vector<Route>& get_adjacent_routes_by_ID(std::string ID);
+    void parse_airport_data(string airport_file);
+    void parse_routes_data(string route_file);
 
     // TESTING
     std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>&
     get_airports();
     std::vector<Route>& get_routes();
+
+    // Create getter for this
+    Airport start_airport;
 };

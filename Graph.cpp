@@ -1,13 +1,23 @@
 #include "Graph.h"
 
-Graph::Graph() {
-    // Files
+Graph::Graph(string airport_file, string route_file) {
+    parse_airport_data(airport_file);
+    parse_routes_data(route_file);
+}
+
+Graph::Graph(std::vector<string> input) {
+    for (auto& node : input) {
+        Airport vertex(node);
+    }
+}
+
+void Graph::parse_airport_data(string airport_file) {
     airports_ = std::unordered_map<std::string,
                                    std::pair<Airport, std::vector<Route>>>();
+    int count = 0;
 
-    std::ifstream airport_data("Data/airport_data.txt");
-    std::ifstream route_data("Data/route_data.txt");
-    // Create and fill all nodes
+    std::ifstream airport_data(airport_file);
+
     std::unordered_map<std::string, std::string> var_names;
 
     std::pair<std::string, std::string> name_pair("name", "");
@@ -30,11 +40,8 @@ Graph::Graph() {
         "abbreviation", "ICAO",     "latitude", "longitude",
         "altitude",     "timezone", "DST",      "timezone-database",
         "type",         "source"};
-    std::string route_headers[9] = {
-        "airline_code",     "airline_ID",     "source_code", "source_ID",
-        "destination_code", "destination_ID", "codeshare",   "stops",
-        "equipment"};
-    if (airport_data.is_open() && route_data.is_open()) {
+
+    if (airport_data.is_open()) {
         std::string curr_airport;
         while (!airport_data.eof()) {
             int i = 0;
@@ -85,7 +92,6 @@ Graph::Graph() {
             } else {
                 long_val = std::stod(var_names["longitude"], NULL);
             }
-
             Airport new_airport(var_names["openflightID"], var_names["name"],
                                 var_names["city"], var_names["country"],
                                 lat_val, long_val, var_names["abbreviation"]);
@@ -97,9 +103,25 @@ Graph::Graph() {
             std::pair<std::string, std::pair<Airport, std::vector<Route>>>
                 completed(new_airport.get_OpenFlightID(), new_pair);
             airports_.insert(completed);
+
+            if (count == 0) {  // Set SFO airport as start
+                start_airport = new_airport;
+            }
         }
         airport_data.close();
-        var_names.clear();
+    }
+}
+
+void Graph::parse_routes_data(string route_file) {
+    std::string route_headers[9] = {
+        "airline_code",     "airline_ID",     "source_code", "source_ID",
+        "destination_code", "destination_ID", "codeshare",   "stops",
+        "equipment"};
+    std::ifstream route_data(route_file);
+
+    std::unordered_map<std::string, std::string> var_names;
+
+    if (route_data.is_open()) {
         // Route data
         std::pair<std::string, std::string> source_pair("source_ID", "");
         std::pair<std::string, std::string> dest_pair("destination_ID", "");
@@ -139,14 +161,19 @@ Graph::Graph() {
                 i++;
                 start_index = delim_index + 1;
             }
-            if(var_names["stops"] != "0"){
+            if (var_names["stops"] != "0") {
                 continue;
             }
-            const Airport& curr_source = get_airport_by_ID(var_names["source_ID"]);
-            const Airport& curr_dest = get_airport_by_ID(var_names["destination_ID"]);
+            const Airport& curr_source =
+                get_airport_by_ID(var_names["source_ID"]);
+            const Airport& curr_dest =
+                get_airport_by_ID(var_names["destination_ID"]);
             int num_stops = std::stoi(var_names["stops"], NULL);
-            Route new_route(curr_source, curr_dest, var_names["airline_code"], num_stops);
+            Route new_route(curr_source, curr_dest, var_names["airline_code"],
+                            num_stops);
             routes_.push_back(new_route);
+            airports_[curr_source.get_OpenFlightID()].second.push_back(
+                new_route);
         }
         route_data.close();
     }
@@ -154,6 +181,10 @@ Graph::Graph() {
 
 const Airport& Graph::get_airport_by_ID(std::string ID) {
     return airports_[ID].first;
+}
+
+const std::vector<Route>& Graph::get_adjacent_routes_by_ID(std::string ID) {
+    return airports_[ID].second;
 }
 
 std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>&
