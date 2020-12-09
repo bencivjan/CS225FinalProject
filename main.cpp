@@ -8,7 +8,7 @@ int main() {
 
     // Graph FlightMap("Data/test_airport_data.csv",
     //                 "Data/test_cycle_route_data.csv");
-    Graph FlightMap("Data/airport_data.csv", "Data/route_data.csv");
+    Graph FlightMap("Data/airport_data.csv", "Data/route_data.csv", "1");
     std::unordered_map<std::string, std::pair<Airport, std::vector<Route>>>
         airports = FlightMap.get_airports();
     std::vector<Route> routes = FlightMap.get_routes();
