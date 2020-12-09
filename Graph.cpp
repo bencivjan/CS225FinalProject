@@ -193,3 +193,12 @@ Graph::get_airports() {
 }
 
 std::vector<Route>& Graph::get_routes() { return routes_; }
+
+int Graph::get_dist(Airport source, Airport destination) {
+    std::pair<double, double> coords1 = source.get_coords();
+    std::pair<double, double> coords2 = destination.get_coords();
+    int dist =
+        ((coords1.first - coords2.first) * (coords1.first - coords2.first)) +
+        ((coords1.second - coords2.second) * (coords1.second - coords2.second));
+    return sqrt(dist);
+}
