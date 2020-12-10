@@ -10,7 +10,7 @@ using std::queue;
 
 class BFS {
    public:
-    void traversal(Graph g, Airport start);
+    std::vector<Airport> traversal(Graph g, Airport start);
 
     int count;
     Airport start_airport;
