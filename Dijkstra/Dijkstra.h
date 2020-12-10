@@ -12,12 +12,12 @@ class Dijkstra{
     //maps a path weight to a certatin airport
     std::map<int, std::string> data;
 
-    const Graph& full_graph;
+    Graph& full_graph;
 
     public:
     std::unordered_map<std::string, int> SSSP;
 
-    Dijkstra(const Graph& original, const Airport& source);
+    Dijkstra(Graph& original, const Airport& source);
     void algorithm();
 
     
