@@ -11,23 +11,24 @@ TEST_CASE("Astar test example", "[part=astar]") {
 
     Airport end = g.get_airport_by_ID("3");
 
-    astar.astarPath(g, g.start_airport, end);
+    vector<Airport> path = astar.astarPath(g, g.start_airport, end);
 
     SECTION("Check visited correct number of airports") {
-        REQUIRE(bfs.count == 3);
+        REQUIRE(astar.count_closed == 3);
+        REQUIRE(astar.count_open == 3);
     }
 
     SECTION("Check visited correct airport first") {
-        REQUIRE(bfs.start_airport.get_OpenFlightID() == "1");
+        REQUIRE(path[0].get_OpenFlightID() == "1");
     }
 
     SECTION("Check visited correct airport last") {
-        REQUIRE(bfs.end_airport.get_OpenFlightID() == "3");
+        REQUIRE(path[path.size() - 1].get_OpenFlightID() == "3");
     }
 
     SECTION("Visited airports in correct order") {
-        REQUIRE(bfs.visited_airport_ids.at(0) == "1");
-        REQUIRE(bfs.visited_airport_ids.at(1) == "2");
-        REQUIRE(bfs.visited_airport_ids.at(2) == "3");
+        REQUIRE(path[0].get_OpenFlightID() == "1");
+        REQUIRE(path[1].get_OpenFlightID() == "2");
+        REQUIRE(path[2].get_OpenFlightID() == "3");
     }
 }
