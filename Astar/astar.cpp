@@ -25,8 +25,8 @@ Airport& Astar::runAstar(Graph& graph, const Airport& start,
                          const Airport& end) {
     Airport current;
 
-    h[start.get_OpenFlightID()] = graph.get_dist(start, start);
-    g[start.get_OpenFlightID()] = graph.get_dist(start, end);
+    g[start.get_OpenFlightID()] = graph.get_dist(start, start);
+    h[start.get_OpenFlightID()] = graph.get_dist(start, end);
 
     open.push_back(start);
 
