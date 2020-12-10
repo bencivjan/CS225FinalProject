@@ -71,6 +71,12 @@
     "tuple": "cpp",
     "type_traits": "cpp",
     "typeinfo": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "*.tcc": "cpp",
+    "cinttypes": "cpp",
+    "clocale": "cpp",
+    "condition_variable": "cpp",
+    "memory_resource": "cpp",
+    "shared_mutex": "cpp"
   }
 }

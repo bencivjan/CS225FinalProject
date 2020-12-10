@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include <cmath>
 
 Graph::Graph(string airport_file, string route_file, string start_airport_ID) {
     parse_airport_data(airport_file, start_airport_ID);
