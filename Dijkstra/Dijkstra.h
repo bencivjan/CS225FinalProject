@@ -12,6 +12,8 @@ class Dijkstra{
     //maps a path weight to a certatin airport
     std::map<int, std::string> data;
 
+    std::unordered_map<std::string, int> rev_data;
+
     Graph& full_graph;
 
     public:

@@ -5,7 +5,6 @@
 
 Dijkstra::Dijkstra(Graph& original, const Airport& source) : full_graph(original) {
     //Need something for setting the original
-    
     BFS bfs;
     bfs.traversal(original, source);
     connected_nodes = bfs.visited_airport_ids;
@@ -13,18 +12,19 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source) : full_graph(original
     for (size_t i = 0; i < connected_nodes.size(); i++) {
         if (source.get_OpenFlightID() == connected_nodes[i]) {
             data.insert(std::pair<int, std::string>(0, connected_nodes[i]));
+            rev_data.insert(std::pair<std::string, int>(connected_nodes[i],0));
         }
         else {
-            data.insert(std::pair<int, std::string>(INT64_MAX, connected_nodes[i])); 
+            data.insert(std::pair<int, std::string>(INT32_MAX, connected_nodes[i])); 
+            rev_data.insert(std::pair<std::string, int>(connected_nodes[i],INT32_MAX));
         }
+
         predecessor.insert(std::pair<std::string, std::string>("", ""));
     }    
 }
 
 
-void Dijkstra::algorithm() {
-    std::unordered_map<std::string, int> rev_data;
-    
+void Dijkstra::algorithm() {    
     size_t num_nodes = connected_nodes.size();
     size_t i = 0;
     for(i = 0; i < num_nodes; i++){
