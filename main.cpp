@@ -39,11 +39,11 @@ int main(int argc, char* argv[]) {
 
         Airport end = g.get_airport_by_ID("3135");
 
-        vector<Airport> output = astar.astarPath(g, g.start_airport, end);
-
         cout << "Astar search started" << endl;
         cout << "Start airport: " << g.start_airport.get_name() << endl;
         cout << "End airport: " << end.get_name() << endl;
+
+        vector<Airport> output = astar.astarPath(g, g.start_airport, end);
 
         for (size_t i = 0; i < output.size(); i++) {
             cout << "Step: " << i << ", visited: " << output[i].get_name()

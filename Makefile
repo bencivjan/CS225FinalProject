@@ -1,4 +1,4 @@
-map : main.o Graph.o Airport.o Route.o
+map : main.o Graph.o Airport.o Route.o BFS.o Astar.o
 	clang++ main.o Graph.o Airport.o Route.o BFS.o Astar.o -std=c++1y -stdlib=libc++ -lc++abi -lm -o map
 
 main.o : main.cpp
