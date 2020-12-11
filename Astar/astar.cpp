@@ -1,34 +1,37 @@
 #include "astar.h"
 
-vector<Airport&> Astar::astarPath(Graph& graph, const Airport& start,
-                                  const Airport& end) {
+vector<Airport> Astar::astarPath(Graph graph, const Airport start,
+                                 const Airport end) {
     open.clear();
     closed.clear();
     h.clear();
     g.clear();
     f.clear();
     parent.clear();
-    vector<Airport&> path;
-    Airport& final = runAstar(graph, start, end);
-    Airport* current = &final;
-    string current_ID = current->get_OpenFlightID();
+    vector<Airport> path;
+    Airport final = runAstar(graph, start, end);
+    Airport current = final;
+    string current_ID = current.get_OpenFlightID();
 
     while (parent.find(current_ID) != parent.end()) {
-        path.insert(path.begin(), *current);
+        path.insert(path.begin(), current);
         current = parent[current_ID];
-        current_ID = current->get_OpenFlightID();
+        current_ID = current.get_OpenFlightID();
     }
+    path.insert(path.begin(), current);
+
     return path;
 }
 
-Airport& Astar::runAstar(Graph& graph, const Airport& start,
-                         const Airport& end) {
+Airport Astar::runAstar(Graph graph, const Airport start, const Airport end) {
     Airport current;
 
-    h[start.get_OpenFlightID()] = graph.get_dist(start, start);
-    g[start.get_OpenFlightID()] = graph.get_dist(start, end);
+    g[start.get_OpenFlightID()] = graph.get_dist(start, start);
+    h[start.get_OpenFlightID()] = graph.get_dist(start, end);
 
     open.push_back(start);
+    count_open = 1;
+    count_closed = 0;
 
     while (open.size() > 0) {
         // current is node with smallest f cost in open list
@@ -39,6 +42,7 @@ Airport& Astar::runAstar(Graph& graph, const Airport& start,
         open.erase(open.begin() + index);
         // Push current onto the closed list
         closed.push_back(current);
+        count_closed++;
 
         // If the current node is the end node, we are done
         if (current_ID == end.get_OpenFlightID()) {
@@ -56,6 +60,7 @@ Airport& Astar::runAstar(Graph& graph, const Airport& start,
             if (exists(closed, neighbor)) continue;
 
             // If path to neighbor (g cost) is shorter than current
+            if (g.find(neighbor_ID) == g.end()) g[neighbor_ID] = INT_MAX;
             if (g[current_ID] + graph.get_dist(current, neighbor) <
                 g[neighbor_ID]) {
                 // Set f cost (through g and h)
@@ -63,17 +68,19 @@ Airport& Astar::runAstar(Graph& graph, const Airport& start,
                     g[current_ID] + graph.get_dist(current, neighbor);
                 h[neighbor_ID] = graph.get_dist(neighbor, end);
                 // Set parent of neighbor to current
-                parent[neighbor_ID] = &current;
+                parent[neighbor_ID] = current;
             }
             // If neighbor is not in open list, add it to open list
-            if (exists(open, neighbor)) {
+            if (!exists(open, neighbor)) {
                 open.push_back(neighbor);
+                count_open++;
             }
         }
     }
+    return Airport();
 }
 
-int Astar::fcost(const Airport& a) {
+int Astar::fcost(const Airport a) {
     string name = a.get_OpenFlightID();
 
     if (f.find(name) != f.end()) {
@@ -90,18 +97,20 @@ int Astar::fcost(const Airport& a) {
     }
 }
 
-int Astar::min_fcost(const vector<Airport>& v) {
+int Astar::min_fcost(const vector<Airport> v) {
     if (v.size() == 0) return 0;
-    int min = fcost(v[0]);
+    int min = 0;
+    int index = 0;
     for (auto& a : v) {
         if (fcost(a) < min) {
-            min = fcost(a);
+            min = index;
         }
+        index++;
     }
     return min;
 }
 
-bool Astar::exists(const vector<Airport>& v, const Airport& check) {
+bool Astar::exists(const vector<Airport> v, const Airport check) {
     for (auto& airport : v) {
         if (airport == check) {
             return true;

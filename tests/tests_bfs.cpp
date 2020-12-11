@@ -213,30 +213,6 @@ TEST_CASE("BFS traversal on no outpath graph", "[part=bfs]") {
     }
 }
 
-// // TEST_CASE("BFS traversal on no airports graph", "[part=bfs]") {
-// //     BFS bfs;
-// //     Graph g("Data/test_empty_airport_data.csv",
-// //             "Data/test_simple_route_data.csv", "1");
-
-// //     bfs.traversal(g, g.start_airport);
-
-// //     SECTION("Check visited correct number of airports") {
-// //         REQUIRE(bfs.count == 0);
-// //     }
-
-// //     SECTION("Check visited correct airport first") {
-// //         REQUIRE(bfs.start_airport.get_OpenFlightID() == "");
-// //     }
-
-// //     SECTION("Check visited correct airport last") {
-// //         REQUIRE(bfs.end_airport.get_OpenFlightID() == "");
-// //     }
-
-// //     SECTION("Visited airports in correct order") {
-// //         REQUIRE(bfs.visited_airport_ids.size() == 0);
-// //     }
-// // }
-
 TEST_CASE("BFS traversal on complex graph", "[part=bfs]") {
     BFS bfs;
     Graph g("Data/test_complex_airport_data.csv",
@@ -285,13 +261,13 @@ TEST_CASE("BFS traversal on dataset", "[part=bfs]") {
         REQUIRE(bfs.end_airport.get_OpenFlightID() == "5522");
     }
 
-    // SECTION("Visited airports in correct order") {
-    //     REQUIRE(bfs.visited_airport_ids[0] == "1");
-    //     REQUIRE(bfs.visited_airport_ids[1] == "5");
-    //     REQUIRE(bfs.visited_airport_ids[2] == "3");
-    //     REQUIRE(bfs.visited_airport_ids[3] == "7");
-    //     REQUIRE(bfs.visited_airport_ids[4] == "6");
-    //     REQUIRE(bfs.visited_airport_ids[5] == "2");
-    //     REQUIRE(bfs.visited_airport_ids[6] == "8");
-    // }
+    SECTION("Visited airports in correct order") {
+        REQUIRE(bfs.visited_airport_ids[0] == "1");
+        REQUIRE(bfs.visited_airport_ids[1] == "3");
+        REQUIRE(bfs.visited_airport_ids[2] == "4");
+        REQUIRE(bfs.visited_airport_ids[3] == "2");
+        REQUIRE(bfs.visited_airport_ids[4] == "5");
+        REQUIRE(bfs.visited_airport_ids[5] == "5431");
+        REQUIRE(bfs.visited_airport_ids[6] == "5434");
+    }
 }

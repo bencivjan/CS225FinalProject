@@ -26,7 +26,7 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source) : full_graph(original
 }
 
 
-void Dijkstra::algorithm() {    
+std::map<std::string, double> Dijkstra::algorithm() {    
     int num_nodes = (int)data.size();
     int i = 0;
     for(i = 0; i < num_nodes; i++){
@@ -97,6 +97,6 @@ void Dijkstra::algorithm() {
         SSSP.insert(std::pair<std::string, int>((*top).second, (*top).first));
         data.erase(top);
     }
-    return;
+    return SSSP;
 }
 

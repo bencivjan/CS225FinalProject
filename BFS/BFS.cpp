@@ -1,10 +1,11 @@
 #include "BFS.h"
 
-void BFS::traversal(Graph g, Airport start) {
+std::vector<Airport> BFS::traversal(Graph g, Airport start) {
     count = 0;
     start_airport = g.start_airport;
     queue<Airport> q;
     std::unordered_map<string, bool> visited;
+    std::vector<Airport> path;
 
     visited[start.get_OpenFlightID()] = true;
     q.push(start);
@@ -13,6 +14,7 @@ void BFS::traversal(Graph g, Airport start) {
         count++;
         Airport& curr = q.front();
         visited_airport_ids.push_back(q.front().get_OpenFlightID());
+        path.push_back(q.front());
         q.pop();
         vector<Route> routes =
             g.get_adjacent_routes_by_ID(curr.get_OpenFlightID());
@@ -27,17 +29,6 @@ void BFS::traversal(Graph g, Airport start) {
             end_airport = curr;
         }
     }
-}
 
-// procedure BFS(G, root) is
-//        let Q be a queue
-//        label root as discovered
-//        Q.enqueue(root)
-//        while Q is not empty do
-//            v := Q.dequeue()
-//            if v is the goal then
-//                return v
-//           for all edges from v to w in G.adjacentEdges(v) do
-//               if w is not labeled as discovered then
-//                   label w as discovered
-//                   Q.enqueue(w)
+    return path;
+}

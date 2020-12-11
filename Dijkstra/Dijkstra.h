@@ -17,10 +17,10 @@ class Dijkstra{
     Graph& full_graph;
 
     public:
-    std::unordered_map<std::string, double> SSSP;
+    std::map<std::string, double> SSSP;
 
     Dijkstra(Graph& original, const Airport& source);
-    void algorithm();
+    std::map<std::string, double> algorithm();
 
     
 };
