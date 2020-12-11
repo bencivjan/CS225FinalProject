@@ -1,5 +1,5 @@
 map : main.o Graph.o Airport.o Route.o BFS.o Astar.o
-	clang++ main.o Graph.o Airport.o Route.o BFS.o Astar.o -std=c++1y -stdlib=libc++ -lc++abi -lm -o map
+	clang++ main.o Graph.o Airport.o Route.o BFS.o astar.o -std=c++1y -stdlib=libc++ -lc++abi -lm -o map
 
 main.o : main.cpp
 	clang++ -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic main.cpp
