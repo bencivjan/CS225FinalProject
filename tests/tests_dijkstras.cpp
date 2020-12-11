@@ -6,7 +6,7 @@
 #include "../cs225/PNG.h"
 #include "../cs225/catch/catch.hpp"
 
-TEST_CASE("Dijkstras Algorithm on simple graph", "[part=dijkstras]") {
+TEST_CASE("Dijkstras Algorithm on simple graph", "[part=dijkstra]") {
     Graph g("Data/test_simple_airport_data.csv",
             "Data/test_simple_route_data.csv", "1");
     Dijkstra dijk = Dijkstra(g, g.start_airport);
@@ -22,7 +22,7 @@ TEST_CASE("Dijkstras Algorithm on simple graph", "[part=dijkstras]") {
     }
 }
 
-TEST_CASE("Dijkstras Algorithm on complex graph", "[part=dijkstras]") {
+TEST_CASE("Dijkstras Algorithm on complex graph", "[part=dijkstra]") {
     Graph g("Data/test_simple_airport_data.csv",
             "Data/test_simple_route_data.csv", "1");
     Dijkstra dijk = Dijkstra(g, g.start_airport);
