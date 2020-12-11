@@ -35,6 +35,8 @@ int main(int argc, char* argv[]) {
             cout << "Step: " << i << ", visited: " << output[i].get_name()
                  << endl;
         }
+
+        cout << "Bfs traversal complete" << endl;
     } else if (input == "dijkstra") {
         Graph g("Data/airport_data.csv", "Data/route_data.csv", "3731");
         Dijkstra dijkstra = Dijkstra(g, g.start_airport);
