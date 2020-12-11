@@ -20,9 +20,9 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source)
                 std::pair<std::string, double>(connected_nodes[i], 0));
         } else {
             data.insert(
-                std::pair<double, std::string>(INT32_MAX, connected_nodes[i]));
+                std::pair<double, std::string>(DBL_MAX, connected_nodes[i]));
             rev_data.insert(
-                std::pair<std::string, double>(connected_nodes[i], INT32_MAX));
+                std::pair<std::string, double>(connected_nodes[i], DBL_MAX));
         }
 
         predecessor.insert(
@@ -30,12 +30,11 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source)
     }
 }
 
-std::map<std::string, double> Dijkstra::algorithm() {
+std::unordered_map<std::string, double> Dijkstra::algorithm() {
     int num_nodes = (int)data.size();
     int i = 0;
     for (i = 0; i < num_nodes; i++) {
-        std::cout << "Total Nodes = " << num_nodes << "\n";
-        std::map<double, std::string>::iterator top = data.begin();
+        std::multimap<double, std::string>::iterator top = data.begin();
         std::vector<Route>& curr_adjacent =
             full_graph.get_adjacent_routes_by_ID((*top).second);
         int num_adj = (int)curr_adjacent.size();
@@ -55,17 +54,16 @@ std::map<std::string, double> Dijkstra::algorithm() {
                 curr_adjacent[j].get_destination().get_OpenFlightID();
             // std::cout << "Curr Weight = " << curr_adjacent[i].get_weight() <<
             // "\n";
-            std::string found = rev_data.count(curr_ID) ? "Yes" : "No";
-            std::cout << "Found? " << found << "\n";
+            //std::string found = rev_data.count(curr_ID) ? "Yes" : "No";
+            //std::cout << "Found? " << found << "\n";
             std::cout << "Adj Airport " << curr_ID << " Current Path "
                       << rev_data[curr_ID] << "\n";
             if ((*top).first + curr_adjacent[j].get_weight() <
                 rev_data[curr_ID]) {
                 rev_data[curr_ID] =
                     (*top).first + curr_adjacent[j].get_weight();
-                std::map<double, std::string>::iterator search =
-                    data.begin();  // lower_bound((*top).first +
-                                   // curr_adjacent[j].get_weight());
+                std::multimap<double, std::string>::iterator search =
+                    data.begin();  // lower_bound((*top).first + curr_adjacent[j].get_weight());
 
                 /**********************/
                 // Bug in this part
@@ -75,9 +73,6 @@ std::map<std::string, double> Dijkstra::algorithm() {
                 // analyzing (stored in curr_ID variable)
 
                 while ((*search).second != curr_ID && search != data.end()) {
-                    std::cout << "It = " << (*search).second
-                              << " currID = " << curr_ID << "\n";
-                    search++;
                     if ((*search).second == curr_ID) {
                         break;
                     }
@@ -88,10 +83,13 @@ std::map<std::string, double> Dijkstra::algorithm() {
                     // use the regular map, find the largest possible lat-long
                     // distance on earth and make each key some number larger
                     // than that
-                    std::pair<std::map<double, std::string>::iterator,
-                              std::map<double, std::string>::iterator>
+
+                    std::pair<std::multimap<double, std::string>::iterator,
+                              std::multimap<double, std::string>::iterator>
                         range = data.equal_range((*search).first);
-                    std::map<double, std::string>::iterator temp = range.first;
+                    std::multimap<double, std::string>::iterator temp = range.first;
+
+                    int x = 1;
                     while (temp != range.second) {
                         if ((*temp).second == curr_ID) {
                             std::cout << "It = " << (*temp).second
@@ -99,27 +97,37 @@ std::map<std::string, double> Dijkstra::algorithm() {
                             (*search).second = curr_ID;
                             break;
                         }
+                        x++;
                         temp++;
                     }
+                    if((*search).second != curr_ID){
+                        break;
+                    }
+                    search++;
                 }
 
                 // Things after this point should be good but havent checked to
                 // be sure
-
+                std::cout << "ITERATOR did find\n";
                 // Error check iterator
                 if (search == data.end()) {
+                    std::cout << "SSSP size " << SSSP.size() << "\n";
+                    std::cout << "Should have " << connected_nodes.size() << "\n";
                     std::cout << "ERROR FINDING PORT\n";
-                    return std::map<string, double>();
+                    return std::unordered_map<string, double>();
                 }
-                double old = (*search).first;
-                data.erase(old);
+                data.erase(search);
                 data.insert(std::pair<double, std::string>(
                     (*top).first + curr_adjacent[j].get_weight(), curr_ID));
                 predecessor[curr_ID] = (*top).second;
             }
         }
+
         SSSP.insert(std::pair<std::string, int>((*top).second, (*top).first));
         data.erase(top);
+        top++;
     }
+    std::cout << "SSSP size " << SSSP.size() << "\n";
+    std::cout << "Should have " << connected_nodes.size() << "\n";
     return SSSP;
 }
