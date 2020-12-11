@@ -125,7 +125,6 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
 
         SSSP.insert(std::pair<std::string, int>((*top).second, (*top).first));
         data.erase(top);
-        top++;
     }
     std::cout << "SSSP size " << SSSP.size() << "\n";
     std::cout << "Should have " << connected_nodes.size() << "\n";
