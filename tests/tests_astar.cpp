@@ -4,7 +4,7 @@
 #include "../cs225/PNG.h"
 #include "../cs225/catch/catch.hpp"
 
-TEST_CASE("Astar test example", "[part=astar]") {
+TEST_CASE("Astar simple test example", "[part=astar]") {
     Astar astar;
     Graph g("Data/test_simple_airport_data.csv",
             "Data/test_simple_route_data.csv", "1");
