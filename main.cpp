@@ -11,12 +11,12 @@ int main(int argc, char* argv[]) {
 
     if (argc <= 1) {
         cout << "Please run map with one argument" << endl;
-        cout << "Select from: bfs, dijkstra, astar, or all" << endl;
+        cout << "Select from: bfs, dijkstra, or astar" << endl;
         return 1;
     }
     if (argc >= 3) {
         cout << "Please only input one argument" << endl;
-        cout << "Select from: bfs, dijkstra, astar, or all" << endl;
+        cout << "Select from: bfs, dijkstra, or astar" << endl;
         return 1;
     }
 
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 
     if (input == "bfs") {
         BFS bfs;
-        Graph g("Data/airport_data.csv", "Data/route_data.csv", "1");
+        Graph g("Data/airport_data.csv", "Data/route_data.csv", "3731");
         vector<Airport> output = bfs.traversal(g, g.start_airport);
 
         cout << "BFS traversal started" << endl;
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
         }
         cout << "Reached destination" << endl;
     } else {
-        cout << "Select from: bfs, dijkstra, astar, or all" << endl;
+        cout << "Select from: bfs, dijkstra, or astar" << endl;
     }
 
     return 0;
