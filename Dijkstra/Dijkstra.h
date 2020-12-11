@@ -10,14 +10,14 @@ class Dijkstra{
     std::unordered_map<std::string, std::string> predecessor;
 
     //maps a path weight to a certatin airport
-    std::map<int, std::string> data;
+    std::multimap<double, std::string> data;
 
-    std::unordered_map<std::string, int> rev_data;
+    std::unordered_map<std::string, double> rev_data;
 
     Graph& full_graph;
 
     public:
-    std::unordered_map<std::string, int> SSSP;
+    std::unordered_map<std::string, double> SSSP;
 
     Dijkstra(Graph& original, const Airport& source);
     void algorithm();

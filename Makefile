@@ -1,5 +1,5 @@
-map : main.o Graph.o Airport.o Route.o
-	clang++ main.o Graph.o Airport.o Route.o -std=c++1y -stdlib=libc++ -lc++abi -lm -o map
+map : main.o Graph.o Airport.o Route.o Dijkstra.o BFS.o
+	clang++ main.o Graph.o Airport.o Route.o Dijkstra.o BFS.o -std=c++1y -stdlib=libc++ -lc++abi -lm -o map
 
 main.o : main.cpp
 	clang++ -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic main.cpp
@@ -16,6 +16,8 @@ Route.o : Route.h Route.cpp
 BFS.o : BFS/BFS.h BFS/BFS.cpp
 	clang++ -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic BFS/BFS.cpp
 
+Dijkstra.o : Dijkstra/Dijkstra.cpp Dijkstra/Dijkstra.h 
+	clang++ -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic Dijkstra/Dijkstra.cpp
 
 
 test : tests_bfs.o Graph.o Airport.o Route.o BFS.o

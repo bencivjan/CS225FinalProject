@@ -174,6 +174,7 @@ void Graph::parse_routes_data(string route_file) {
             Route new_route(curr_source, curr_dest, var_names["airline_code"],
                             num_stops);
             routes_.push_back(new_route);
+            
             airports_[curr_source.get_OpenFlightID()].second.push_back(
                 new_route);
         }
@@ -185,7 +186,7 @@ const Airport& Graph::get_airport_by_ID(std::string ID) {
     return airports_[ID].first;
 }
 
-const std::vector<Route>& Graph::get_adjacent_routes_by_ID(std::string ID) {
+std::vector<Route>& Graph::get_adjacent_routes_by_ID(std::string ID) {
     return airports_[ID].second;
 }
 
