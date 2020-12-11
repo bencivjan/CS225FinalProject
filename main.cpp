@@ -1,7 +1,9 @@
 #include "Astar/astar.h"
 #include "BFS/BFS.h"
+#include "Dijkstra/Dijkstra.h"
 #include "Graph.h"
-
+#include "stdlib.h"
+#include "time.h"
 using std::cout;
 using std::endl;
 using std::string;
@@ -33,6 +35,22 @@ int main(int argc, char* argv[]) {
             cout << "Step: " << i << ", visited: " << output[i].get_name()
                  << endl;
         }
+    } else if (input == "dijkstra") {
+        Graph g("Data/airport_data.csv", "Data/route_data.csv", "3731");
+        Dijkstra dijkstra = Dijkstra(g, g.start_airport);
+
+        cout << "Dijkstras search started" << endl;
+        cout << "Start airport: " << g.start_airport.get_name() << endl;
+
+        std::map<std::string, double> output = dijkstra.algorithm();
+
+        for (auto const& key_val : output) {
+            cout << "Airport name: "
+                 << g.get_airport_by_ID(key_val.first).get_name()
+                 << ", distance: " << key_val.second << endl;
+        }
+
+        cout << "Map is completely populated" << endl;
     } else if (input == "astar") {
         Astar astar;
         Graph g("Data/airport_data.csv", "Data/route_data.csv", "3731");

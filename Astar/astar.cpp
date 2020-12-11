@@ -1,13 +1,14 @@
 #include "astar.h"
 
-vector<Airport> Astar::astarPath(Graph graph, const Airport start,
-                                 const Airport end) {
+vector<Airport> Astar::astarPath(Graph& graph, const Airport& start,
+                                 const Airport& end) {
     open.clear();
     closed.clear();
     h.clear();
     g.clear();
     f.clear();
     parent.clear();
+
     vector<Airport> path;
     Airport final = runAstar(graph, start, end);
     Airport current = final;
@@ -23,7 +24,8 @@ vector<Airport> Astar::astarPath(Graph graph, const Airport start,
     return path;
 }
 
-Airport Astar::runAstar(Graph graph, const Airport start, const Airport end) {
+Airport Astar::runAstar(Graph& graph, const Airport& start,
+                        const Airport& end) {
     Airport current;
 
     g[start.get_OpenFlightID()] = graph.get_dist(start, start);
@@ -50,10 +52,10 @@ Airport Astar::runAstar(Graph graph, const Airport start, const Airport end) {
         }
 
         // Iterate through neighbors
-        vector<Route> neighbors = graph.get_adjacent_routes_by_ID(current_ID);
+        vector<Route>& neighbors = graph.get_adjacent_routes_by_ID(current_ID);
 
         for (auto& route : neighbors) {
-            Airport neighbor = route.get_destination();
+            const Airport& neighbor = route.get_destination();
             string neighbor_ID = neighbor.get_OpenFlightID();
             // If neighbor is not walkable or in the closed list, skip to
             // next neighbor
@@ -80,7 +82,7 @@ Airport Astar::runAstar(Graph graph, const Airport start, const Airport end) {
     return Airport();
 }
 
-int Astar::fcost(const Airport a) {
+int Astar::fcost(const Airport& a) {
     string name = a.get_OpenFlightID();
 
     if (f.find(name) != f.end()) {
@@ -97,7 +99,7 @@ int Astar::fcost(const Airport a) {
     }
 }
 
-int Astar::min_fcost(const vector<Airport> v) {
+int Astar::min_fcost(const vector<Airport>& v) {
     if (v.size() == 0) return 0;
     int min = 0;
     int index = 0;
@@ -110,7 +112,7 @@ int Astar::min_fcost(const vector<Airport> v) {
     return min;
 }
 
-bool Astar::exists(const vector<Airport> v, const Airport check) {
+bool Astar::exists(const vector<Airport>& v, const Airport& check) {
     for (auto& airport : v) {
         if (airport == check) {
             return true;

@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include <cmath>
 
 Graph::Graph(string airport_file, string route_file, string start_airport_ID) {
     parse_airport_data(airport_file, start_airport_ID);
@@ -173,6 +174,7 @@ void Graph::parse_routes_data(string route_file) {
             Route new_route(curr_source, curr_dest, var_names["airline_code"],
                             num_stops);
             routes_.push_back(new_route);
+            
             airports_[curr_source.get_OpenFlightID()].second.push_back(
                 new_route);
         }
@@ -184,7 +186,7 @@ const Airport& Graph::get_airport_by_ID(std::string ID) {
     return airports_[ID].first;
 }
 
-const std::vector<Route>& Graph::get_adjacent_routes_by_ID(std::string ID) {
+std::vector<Route>& Graph::get_adjacent_routes_by_ID(std::string ID) {
     return airports_[ID].second;
 }
 

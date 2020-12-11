@@ -18,7 +18,7 @@ std::string Route::get_code() { return this->airline_code; }
 
 int Route::get_stops() { return stops_; }
 
-int Route::get_dist() {
+double Route::get_dist() {
     std::pair<double, double> coords1 = source_.get_coords();
     std::pair<double, double> coords2 = destination_.get_coords();
     int dist =
@@ -27,4 +27,4 @@ int Route::get_dist() {
     return sqrt(dist);
 }
 
-int Route::get_weight() { return weight_; }
+double Route::get_weight() { return weight_; }
