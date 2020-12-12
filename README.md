@@ -19,7 +19,8 @@
 2. To run the Astar pathfinding algorithm enter the command `./map astar`
     - This finds a path from San Diego International Airport to Coimbatore International Airport
 3. To run Dijkstra's algorithm enter the command `./map dijkstra`
-    - This finds the distance to all airports in the dataset from San Diego International Airport
+    - Since the actual data set is so large the runtime for dijkstra's algorithm is very long
+    - We remedied this by instead creating a smaller sample dataset and running the algorithm on that
 
 ## Testing the application
 1. To build the tests enter the command `make test`
