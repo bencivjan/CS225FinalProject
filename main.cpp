@@ -44,11 +44,13 @@ int main(int argc, char* argv[]) {
 
         std::unordered_map<std::string, double> output = dijkstra.algorithm();
 
-        /*for (auto const& key_val : output) {
+        std::cout << output.size() << std::endl;
+
+        for (auto const& key_val : output) {
             cout << "Airport name: "
                  << g.get_airport_by_ID(key_val.first).get_name()
                  << ", distance: " << key_val.second << endl;
-        }*/
+        }
 
         cout << "Map is completely populated" << endl;
     } else if (input == "astar") {

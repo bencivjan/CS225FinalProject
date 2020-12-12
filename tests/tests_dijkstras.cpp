@@ -12,7 +12,6 @@ TEST_CASE("Dijkstras Algorithm on simple graph", "[part=dijkstra]") {
     Dijkstra dijk = Dijkstra(g, g.start_airport);
 
     std::unordered_map<std::string, double> test = dijk.algorithm();
-    
 
     SECTION("Check visited correct number of airports") {
         REQUIRE(test.size() == 3);
@@ -30,8 +29,8 @@ TEST_CASE("Dijkstras Algorithm on simple graph", "[part=dijkstra]") {
 }
 
 TEST_CASE("Dijkstras Algorithm on complex graph", "[part=dijkstra]") {
-    Graph g("Data/test_simple_airport_data.csv",
-            "Data/test_simple_route_data.csv", "1");
+    Graph g("Data/test_complex_airport_data.csv",
+            "Data/test_complex_route_data.csv", "1");
     Dijkstra dijk = Dijkstra(g, g.start_airport);
 
     std::unordered_map<std::string, double> test = dijk.algorithm();
