@@ -30,7 +30,6 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source)
 
 std::unordered_map<std::string, double> Dijkstra::algorithm() {
     int num_nodes = (int)data.size();
-    std::cout << "Nodes = " << num_nodes << "\n";
     int i = 0;
     for (i = 0; i < num_nodes; i++) {
         std::multimap<double, std::string>::iterator top = data.begin();
@@ -52,7 +51,8 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
                 rev_data[curr_ID]) {
                 rev_data[curr_ID] =
                     (*top).first + curr_adjacent[j].get_weight();
-                std::multimap<double, std::string>::iterator search =data.begin();
+                std::multimap<double, std::string>::iterator search =
+                    data.begin();
                 while ((*search).second != curr_ID && search != data.end()) {
                     if ((*search).second == curr_ID) {
                         break;
@@ -63,11 +63,13 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
                         range = data.equal_range((*search).first);
                     std::multimap<double, std::string>::iterator temp =
                         range.first;
-                    if(!data.count((*search).first)){
-                        if(data.count((*search).first)){
+                    if (!data.count((*search).first)) {
+                        if (data.count((*search).first)) {
                             data.erase(search);
                             data.insert(std::pair<double, std::string>(
-                            (*top).first + curr_adjacent[j].get_weight() + j, curr_ID));
+                                (*top).first + curr_adjacent[j].get_weight() +
+                                    j,
+                                curr_ID));
                         }
                         continue;
                     }
@@ -87,7 +89,8 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
                     continue;
                 }
                 data.erase(search);
-                data.insert(std::pair<double, std::string>((*top).first + curr_adjacent[j].get_weight(), curr_ID));
+                data.insert(std::pair<double, std::string>(
+                    (*top).first + curr_adjacent[j].get_weight(), curr_ID));
                 predecessor[curr_ID] = (*top).second;
             }
         }
