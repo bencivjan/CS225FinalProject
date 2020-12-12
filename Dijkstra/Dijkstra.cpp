@@ -5,7 +5,7 @@
 #include "../Graph.h"
 
 Dijkstra::Dijkstra(Graph& original, const Airport& source)
-    : full_graph(original) {
+    : full_graph(original){
     // Need something for setting the original
     BFS bfs;
     bfs.traversal(original, source);
@@ -14,10 +14,8 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source)
     int i = 0;
     for (i = 0; i < length; i++) {
         if (source.get_OpenFlightID() == connected_nodes[i]) {
-            std::cout << "SourceID = " << connected_nodes[i] << "\n";
             data.insert(std::pair<double, std::string>(0, connected_nodes[i]));
-            rev_data.insert(
-                std::pair<std::string, double>(connected_nodes[i], 0));
+            rev_data.insert(std::pair<std::string, double>(connected_nodes[i], 0));
         } else {
             data.insert(
                 std::pair<double, std::string>(DBL_MAX, connected_nodes[i]));
@@ -32,15 +30,19 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source)
 
 std::unordered_map<std::string, double> Dijkstra::algorithm() {
     int num_nodes = (int)data.size();
+    std::cout << "Nodes = " << num_nodes << "\n";
     int i = 0;
     for (i = 0; i < num_nodes; i++) {
         std::multimap<double, std::string>::iterator top = data.begin();
+        std::cout << "\nCurrent MIN = " << (*top).first << " When i = " << i << "\n";
+        std::cout << "Node = " << (*top).second << "\n";
         std::vector<Route>& curr_adjacent =
             full_graph.get_adjacent_routes_by_ID((*top).second);
         int num_adj = (int)curr_adjacent.size();
-        std::cout << "Num Currently Adj = " << num_adj << "\n";
-        std::cout << "Lowest weight = " << (*top).first
-                  << " Lowest ID = " << (*top).second << "\n";
+
+        //std::cout << "Num Currently Adj = " << num_adj << "\n";
+        //std::cout << "Lowest weight = " << (*top).first
+        //          << " Lowest ID = " << (*top).second << "\n";
 
         int j = 0;
         for (j = 0; j < num_adj; j++) {
@@ -60,10 +62,8 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
                       << rev_data[curr_ID] << "\n";
             if ((*top).first + curr_adjacent[j].get_weight() <
                 rev_data[curr_ID]) {
-                rev_data[curr_ID] =
-                    (*top).first + curr_adjacent[j].get_weight();
-                std::multimap<double, std::string>::iterator search =
-                    data.begin();  // lower_bound((*top).first + curr_adjacent[j].get_weight());
+                rev_data[curr_ID] = (*top).first + curr_adjacent[j].get_weight();
+                std::multimap<double, std::string>::iterator search = data.begin();  // lower_bound((*top).first + curr_adjacent[j].get_weight());
 
                 /**********************/
                 // Bug in this part
@@ -89,7 +89,6 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
                         range = data.equal_range((*search).first);
                     std::multimap<double, std::string>::iterator temp = range.first;
 
-                    int x = 1;
                     while (temp != range.second) {
                         if ((*temp).second == curr_ID) {
                             std::cout << "It = " << (*temp).second
@@ -97,10 +96,9 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
                             (*search).second = curr_ID;
                             break;
                         }
-                        x++;
                         temp++;
                     }
-                    if((*search).second != curr_ID){
+                    if(!((*search).second != curr_ID)){
                         break;
                     }
                     search++;
@@ -108,7 +106,7 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
 
                 // Things after this point should be good but havent checked to
                 // be sure
-                std::cout << "ITERATOR did find\n";
+                //std::cout << "ITERATOR did find\n";
                 // Error check iterator
                 if (search == data.end()) {
                     std::cout << "SSSP size " << SSSP.size() << "\n";

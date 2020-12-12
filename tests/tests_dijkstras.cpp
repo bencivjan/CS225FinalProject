@@ -11,6 +11,8 @@ TEST_CASE("Dijkstras Algorithm on simple graph", "[part=dijkstra]") {
             "Data/test_simple_route_data.csv", "1");
     Dijkstra dijk = Dijkstra(g, g.start_airport);
 
+    dijk.algorithm();
+
     SECTION("Check visited correct number of airports") {
         REQUIRE(dijk.SSSP.size() == 3);
     }
@@ -26,6 +28,8 @@ TEST_CASE("Dijkstras Algorithm on complex graph", "[part=dijkstra]") {
     Graph g("Data/test_simple_airport_data.csv",
             "Data/test_simple_route_data.csv", "1");
     Dijkstra dijk = Dijkstra(g, g.start_airport);
+
+    dijk.algorithm();
 
     SECTION("Check visited correct number of airports") {
         REQUIRE(dijk.SSSP.size() == 8);
