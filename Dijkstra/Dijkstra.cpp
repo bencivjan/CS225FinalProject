@@ -14,6 +14,7 @@ Dijkstra::Dijkstra(Graph& original, const Airport& source)
     int i = 0;
     for (i = 0; i < length; i++) {
         if (source.get_OpenFlightID() == connected_nodes[i]) {
+            std::cout << "Source: " << connected_nodes[i] << "\n";
             data.insert(std::pair<double, std::string>(0, connected_nodes[i]));
             rev_data.insert(std::pair<std::string, double>(connected_nodes[i], 0));
         } else {
@@ -34,13 +35,13 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
     int i = 0;
     for (i = 0; i < num_nodes; i++) {
         std::multimap<double, std::string>::iterator top = data.begin();
-        std::cout << "\nCurrent MIN = " << (*top).first << " When i = " << i << "\n";
+        std::cout << "Top ID = " << (*top).first << " When i = " << i << "\n";
         std::cout << "Node = " << (*top).second << "\n";
         std::vector<Route>& curr_adjacent =
             full_graph.get_adjacent_routes_by_ID((*top).second);
         int num_adj = (int)curr_adjacent.size();
 
-        //std::cout << "Num Currently Adj = " << num_adj << "\n";
+        std::cout << "Num Currently Adj = " << num_adj << "\n";
         //std::cout << "Lowest weight = " << (*top).first
         //          << " Lowest ID = " << (*top).second << "\n";
 
@@ -125,6 +126,11 @@ std::unordered_map<std::string, double> Dijkstra::algorithm() {
         data.erase(top);
     }
     std::cout << "SSSP size " << SSSP.size() << "\n";
+    std::unordered_map<std::string, double>::iterator spit = SSSP.begin();
+    while(spit != SSSP.end()){
+        std::cout << "Final Airport " << (*spit).first << "Has weight" << (*spit).second << "\n";
+        spit++;
+    }
     std::cout << "Should have " << connected_nodes.size() << "\n";
     return SSSP;
 }
