@@ -21,7 +21,7 @@ int Route::get_stops() { return stops_; }
 double Route::get_dist() {
     std::pair<double, double> coords1 = source_.get_coords();
     std::pair<double, double> coords2 = destination_.get_coords();
-    int dist =
+    double dist =
         ((coords1.first - coords2.first) * (coords1.first - coords2.first)) +
         ((coords1.second - coords2.second) * (coords1.second - coords2.second));
     return sqrt(dist);

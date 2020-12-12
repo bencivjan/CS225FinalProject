@@ -1,6 +1,7 @@
 
 #include "../Graph.h"
 #include "../BFS/BFS.h"
+#include <float.h>
 class Dijkstra{
     private:
     // Connected nodes
@@ -16,11 +17,12 @@ class Dijkstra{
 
     Graph& full_graph;
 
+
     public:
-    std::map<std::string, double> SSSP;
+    std::unordered_map<std::string, double> SSSP;
 
     Dijkstra(Graph& original, const Airport& source);
-    std::map<std::string, double> algorithm();
+    std::unordered_map<std::string, double> algorithm();
 
     
 };

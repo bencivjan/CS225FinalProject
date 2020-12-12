@@ -25,7 +25,7 @@ Astar.o : Astar/astar.h Astar/astar.cpp
 
 
 test : tests_astar.o tests_bfs.o tests_dijkstras.o Graph.o Airport.o Route.o BFS.o Astar.o Dijkstra.o
-	clang++ tests_astar.o tests_bfs.o tests_dijkstras.o Graph.o Airport.o Route.o BFS.o Astar.o Dijkstra.o -std=c++1y -stdlib=libc++ -lc++abi -lm -o test
+	clang++ tests_astar.o tests_bfs.o tests_dijkstras.o Graph.o Airport.o Route.o BFS.o astar.o Dijkstra.o -std=c++1y -stdlib=libc++ -lc++abi -lm -o test
 
 tests_bfs.o : tests/tests_bfs.cpp cs225/catch/catch.hpp
 	clang++ -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic tests/tests_bfs.cpp

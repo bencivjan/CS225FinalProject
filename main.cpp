@@ -38,13 +38,16 @@ int main(int argc, char* argv[]) {
 
         cout << "Bfs traversal complete" << endl;
     } else if (input == "dijkstra") {
-        Graph g("Data/airport_data.csv", "Data/route_data.csv", "3731");
+        Graph g("Data/test_complex_airport_data.csv",
+                "Data/test_complex_route_data.csv", "1");
         Dijkstra dijkstra = Dijkstra(g, g.start_airport);
 
         cout << "Dijkstras search started" << endl;
         cout << "Start airport: " << g.start_airport.get_name() << endl;
 
-        std::map<std::string, double> output = dijkstra.algorithm();
+        std::unordered_map<std::string, double> output = dijkstra.algorithm();
+
+        std::cout << output.size() << std::endl;
 
         for (auto const& key_val : output) {
             cout << "Airport name: "
