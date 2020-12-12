@@ -2,18 +2,16 @@
 #include <string>
 class Airport {
    private:
-    // Airport Dataset
     std::string name_;
     std::pair<std::string, std::string>
         location;  // first = city, second = country
     std::pair<double, double>
         coordinates;  // first = latitude, second = longitude
 
-    std::string OpenFlightID;  // might not need
-    std::string abbreviation;  // Decide which one (which code)
+    std::string OpenFlightID;
+    std::string abbreviation;
 
    public:
-    // Constructor
     Airport();
     Airport(std::string name);
     Airport(const Airport& other);

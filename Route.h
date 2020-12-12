@@ -3,7 +3,6 @@
 
 #include "Airport.h"
 class Route {
-    // Need to figure out weight
    private:
     const Airport& source_;
     const Airport& destination_;
@@ -15,7 +14,6 @@ class Route {
     Route(const Airport& source, const Airport& destination,
           std::string airline_code, int stops);
 
-    // Getters
     const Airport& get_source();
     const Airport& get_destination();
     std::string get_code();
