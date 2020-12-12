@@ -11,16 +11,21 @@ TEST_CASE("Dijkstras Algorithm on simple graph", "[part=dijkstra]") {
             "Data/test_simple_route_data.csv", "1");
     Dijkstra dijk = Dijkstra(g, g.start_airport);
 
-    dijk.algorithm();
+    std::unordered_map<std::string, double> test = dijk.algorithm();
+    
 
     SECTION("Check visited correct number of airports") {
-        REQUIRE(dijk.SSSP.size() == 3);
+        REQUIRE(test.size() == 3);
+    }
+
+    SECTION("Check visited correct airport first") {
+        REQUIRE(test["Airport A"] == 0);
     }
 
     SECTION("Visited airports without a cycle") {
-        REQUIRE(dijk.SSSP["Airport A"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport B"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport C"] != INT32_MAX);
+        REQUIRE(test["Airport A"] != DBL_MAX);
+        REQUIRE(test["Airport B"] != DBL_MAX);
+        REQUIRE(test["Airport C"] != DBL_MAX);
     }
 }
 
@@ -29,20 +34,24 @@ TEST_CASE("Dijkstras Algorithm on complex graph", "[part=dijkstra]") {
             "Data/test_simple_route_data.csv", "1");
     Dijkstra dijk = Dijkstra(g, g.start_airport);
 
-    dijk.algorithm();
+    std::unordered_map<std::string, double> test = dijk.algorithm();
 
     SECTION("Check visited correct number of airports") {
-        REQUIRE(dijk.SSSP.size() == 8);
+        REQUIRE(test.size() == 8);
+    }
+
+    SECTION("Check visited correct airport first") {
+        REQUIRE(test["Airport A"] == 0);
     }
 
     SECTION("Visited airports without a cycle") {
-        REQUIRE(dijk.SSSP["Airport A"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport B"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport C"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport D"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport E"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport F"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport G"] != INT32_MAX);
-        REQUIRE(dijk.SSSP["Airport H"] != INT32_MAX);
+        REQUIRE(test["Airport A"] != DBL_MAX);
+        REQUIRE(test["Airport B"] != DBL_MAX);
+        REQUIRE(test["Airport C"] != DBL_MAX);
+        REQUIRE(test["Airport D"] != DBL_MAX);
+        REQUIRE(test["Airport E"] != DBL_MAX);
+        REQUIRE(test["Airport F"] != DBL_MAX);
+        REQUIRE(test["Airport G"] != DBL_MAX);
+        REQUIRE(test["Airport H"] != DBL_MAX);
     }
 }
